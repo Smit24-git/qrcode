@@ -7,16 +7,38 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title class="title">Document</title>
 </head>
+
 <body>
-    <h1 class="title"></h1>
-    <div id="qrcode"></div>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.2.2/pouchdb.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
-    <script type="text/javascript">
-        sUrl = "https://mbartist.com"
-        $(".title").html(sUrl);
-        new QRCode($("#qrcode")[0], sUrl);
-    </script>
+    <a href="index.html">
+        << BACK</a>
+            <h1 class="title"></h1>
+            <div id="qrcode"></div>
+            <p id="msg"></p>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.2.2/pouchdb.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+            <script type="text/javascript">
+                const db = new PouchDB('links');
+                const params = new URLSearchParams(window.location.search);
+                const sQuery = params.get("q");
+                console.log(sQuery);
+
+                const fetchDB = new Promise((resolve, reject) => {
+                    db.get(sQuery).then((doc) => {
+                        $(".title").html(doc.url);
+                        new QRCode($("#qrcode")[0], doc.url);
+                        $("#msg").html(doc.msg);
+                        resolve("done");
+                    }).catch((err) => {
+                        reject(err);
+                    });
+                });
+                fetchDB
+                    .then(msg=>console.log(msg))
+                    .catch(err=>console.error(err));
+                // sUrl = "https://mbartist.com"
+                // $(".title").html(sUrl);
+                // new QRCode($("#qrcode")[0], sUrl);
+            </script>
 </body>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title class="title">Document</title>
+</head>
+
+<body>
+    <h1 class="title"></h1>
+    <div id="docs"></div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pouchdb/7.2.2/pouchdb.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+    <script type="text/javascript">
+        const db = new PouchDB('links');
+        const sUrl1 = "https://mbartist.com"
+        const sUrl2 = "https://google.com"
+        const sUrl3 = "https://yahoo.com"
+
+        const sMsg1 = "scan this url to visit mbartist site."
+        const sMsg2 = "scan this url to visit Google home page."
+        const sMsg3 = "scan this url to visit Yahoo home page."
+        const doc1 = { _id: md5(sUrl1), url: sUrl1, msg: sMsg1 };
+        const doc2 = { _id: md5(sUrl2), url: sUrl2, msg: sMsg2 };
+        const doc3 = { _id: md5(sUrl3), url: sUrl3, msg: sMsg3 };
+        const aUrls = [doc1, doc2, doc3];
+        // db.destroy();
+        new Promise((resolve, reject) => {
+            db.bulkDocs(aUrls).then((res) => {
+                resolve("Documents inserted OK");
+            }).catch((err) => {
+                reject(err);
+            });
+        })
+            .then((msg) => {
+                console.log(msg);
+                db.allDocs({ include_docs: true, descending: true }, (err, doc) => {
+                    doc.rows.forEach(e => {
+                        $("#docs").append(`<p><a href='showQrCode.html?q=${e.doc._id}'>${e.doc.url}</a></p>`);
+                        console.log(e.doc);
+                    });
+                }).catch((err) => {
+                    console.error(err);
+                });;
+            })
+            .catch((err) => console.error(err))
+
+
+
+    </script>
+</body>
