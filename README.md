@@ -1,17 +1,16 @@
-With thanks to [Sangmin, Shim](https://github.com/davidshimjs/qrcodejs).
-
-## features:
+# features:
   
-  ### Index file:
+  ## Index file:
   
-    PouchDB to store and retrieve data.
-    md5 library to convert links to hash code.
-    asynchronous function calls to get/store data into pouchDB
+    - PouchDB to store and retrieve data.
+    - md5 library to convert links to hash code.
+    - asynchronous function calls to get/store data into pouchDB
   
-  ### showQrCode file:
+  # showQrCode file:
   
-    back button to go back to index file
-    PouchDB to store and retrieve data.
-    qrCode library to generate qrCode.
-    asynchronous function calls to fetch the data from pouchDB.
+    - back button to go back to index file
+    - PouchDB to store and retrieve data.
+    - qrCode library to generate qrCode.
+    - asynchronous function calls to fetch the data from pouchDB.
     
+With thanks to [Sangmin, Shim](https://github.com/davidshimjs/qrcodejs).
