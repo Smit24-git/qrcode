@@ -6,7 +6,7 @@
     - md5 library to convert links to hash code.
     - asynchronous function calls to get/store data into pouchDB
   
-  # showQrCode file:
+  ## showQrCode file:
   
     - back button to go back to index file
     - PouchDB to store and retrieve data.
